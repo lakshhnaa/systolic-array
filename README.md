@@ -12,6 +12,12 @@ This architecture is used in:
 - High-performance matrix operations
 
 ## Architecture
+A[0] →  PE[0][0] → PE[0][1] → ... → PE[0][7]
+A[1] →  PE[1][0] → PE[1][1] → ... → PE[1][7]
+...
+A[7] →  PE[7][0] → PE[7][1] → ... → PE[7][7]
+↓           ↓                  ↓
+B[0]        B[1]              B[7]
 - Data flows **right** (A inputs) and **down** (B inputs)
 - Each PE computes: `acc += a_in × b_in` every clock cycle
 - 64 PEs total (8×8 grid)
@@ -24,6 +30,21 @@ This architecture is used in:
 ![GTKWave Simulation](docs/waveform.png)
 
 ## Project Structure
+
+```
+systolic_array/
+├── rtl/
+│   └── systolic_array.v    # PE module + top-level array
+├── tb/
+│   └── tb_systolic_array.v # Testbench with waveform dump
+├── scripts/
+│   └── run_sim.sh          # Compile and simulate
+├── docs/
+│   └── waveform.png        # GTKWave screenshot
+└── sim/
+    └── waveform.vcd        # Simulation output (generated)
+```
+
 ## Requirements
 
 - Verilator 5.x
